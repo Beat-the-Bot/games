@@ -1,0 +1,4 @@
+﻿-> IsWinConditionMet - maybe returns an enum
+-> Turn based game
+-> Event Driven
+-> Enum Tests

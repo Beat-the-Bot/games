@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <PackageId>TicTacToe</PackageId>
+    <Company>Jarrus</Company>
+    <Authors>Jarrus</Authors>
+    <Product>Tic Tac Toe</Product>
+    <RootNamespace>Jarrus.TTT</RootNamespace>
+    <AssemblyName>TicTacToe</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Games\Games.csproj" />
+  </ItemGroup>
+
+</Project>
