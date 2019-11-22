@@ -72,8 +72,6 @@ namespace Jarrus.Games
 
             if (!IsReadyToBegin()) { return; }
             EventStream?.Invoke(new EventPayload(EventType.GAME_WILL_START));
-
-            Start();
         }
 
         public void OnPlayerNotReady(Player player) { 

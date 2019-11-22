@@ -318,7 +318,7 @@ namespace Jarrus.GamesTests
             Players[1].Ready();
 
             AssertEventOccured(EventType.GAME_WILL_START, 1);
-            AssertEventOccured(EventType.GAME_STARTED, 1);
+            AssertEventOccured(EventType.GAME_STARTED, 0);
         }
 
         void AssertEventOccured(EventType type, int times = -1) {
