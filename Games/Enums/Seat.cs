@@ -1,6 +1,6 @@
 ﻿namespace Jarrus.Games.Enums
 {
-    public enum Player
+    public enum Seat
     {
         NONE = 0,
         ONE = 1,
@@ -12,6 +12,7 @@
         SEVEN = 7,
         EIGHT = 8,
         NINE = 9,
-        TEN = 10
+        TEN = 10,
+        SPECTATOR = 1001,
     }
 }

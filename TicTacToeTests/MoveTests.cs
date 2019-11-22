@@ -1,4 +1,5 @@
-﻿using Jarrus.TTT;
+﻿using Jarrus.Games.Enums;
+using Jarrus.TTT;
 using Jarrus.TTT.Enums;
 using System;
 using Xunit;
@@ -15,10 +16,10 @@ namespace Jarrus.TTTTests
         [Fact]
         public void ItShouldDetermineIfMoveIsValid_PlayerIds()
         {
-            for (byte i = 0; i < 2; i++)
+            for (byte i = 1; i < 3; i++)
             {
-                var move = new Move(i, 0);
-                Assert.Equal(Validation.VALID, move.GetValidation(State));
+                var move = new TTT.Action((Seat)i, 0);
+                Assert.Equal(Validation.VALID, move.GetValidationType(State));
             }
         }
 
@@ -27,18 +28,21 @@ namespace Jarrus.TTTTests
         {
             for (byte i = 0; i < 9; i++)
             {
-                var move = new Move(0, i);
-                Assert.Equal(Validation.VALID, move.GetValidation(State));
+                var move = new TTT.Action(Seat.ONE, i);
+                Assert.Equal(Validation.VALID, move.GetValidationType(State));
             }
         }
 
         [Fact]
         public void ItShouldDetermineMoveIsInvalid_InvalidPlayerId()
         {
-            for(byte i = 2; i < byte.MaxValue; i++)
+            var noPlayerMove = new TTT.Action(Seat.NONE, 0);
+            Assert.Equal(Validation.INVALID_PLAYERID, noPlayerMove.GetValidationType(State));
+
+            for (byte i = 3; i < byte.MaxValue; i++)
             {
-                var move = new Move(i, 0);
-                Assert.Equal(Validation.INVALID_PLAYERID, move.GetValidation(State));
+                var move = new TTT.Action((Seat)i, 0);
+                Assert.Equal(Validation.INVALID_PLAYERID, move.GetValidationType(State));
             }
         }
 
@@ -47,8 +51,8 @@ namespace Jarrus.TTTTests
         {
             for (byte i = 9; i < byte.MaxValue; i++)
             {
-                var move = new Move(0, i);
-                Assert.Equal(Validation.INVALID_POSITION, move.GetValidation(State));
+                var move = new TTT.Action(Seat.ONE, i);
+                Assert.Equal(Validation.INVALID_POSITION, move.GetValidationType(State));
             }
         }
 
@@ -57,11 +61,11 @@ namespace Jarrus.TTTTests
         {
             for (byte i = 0; i < 9; i++)
             {
-                var move = new Move(0, i);
-                Assert.Equal(Validation.VALID, move.GetValidation(State));
+                var move = new TTT.Action(Seat.ONE, i);
+                Assert.Equal(Validation.VALID, move.GetValidationType(State));
 
                 State.Set(i, Symbol.X);
-                Assert.Equal(Validation.INVALID_POSITION_TAKEN, move.GetValidation(State));
+                Assert.Equal(Validation.INVALID_POSITION_TAKEN, move.GetValidationType(State));
             }
         }
     }
