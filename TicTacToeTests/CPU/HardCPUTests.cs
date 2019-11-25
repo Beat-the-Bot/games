@@ -1,8 +1,6 @@
 ﻿using Jarrus.TTT;
 using Jarrus.TTT.CPU;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Jarrus.TTTTests.CPU

@@ -13,11 +13,13 @@ namespace Jarrus.Games.Players
         protected int Seed;
         protected Random Random;
         private GameMechanics _game;
+        private bool _isHuman;
 
         protected abstract EventAction DetermineMove(GameState gameState);
 
-        public Player()
+        public Player(bool isHuman)
         {
+            _isHuman = isHuman;
             Random = new Random();
             Seed = Random.Next(0, int.MaxValue);
             Random = new Random(Seed);
@@ -77,7 +79,7 @@ namespace Jarrus.Games.Players
 
         protected void HandleEvent(EventPayload payload)
         {
-            if (payload.Type == EventType.PLAYER_TURN_START) { TakeTurn(payload.Player.Seat); return; }
+            if (payload.Type == EventType.PLAYER_TURN_START && _isHuman == false) { TakeTurn(payload.Player.Seat); return; }
         }
 
         public int GetSeed() { return Seed; }

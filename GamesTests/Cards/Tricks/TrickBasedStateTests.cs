@@ -2,15 +2,15 @@
 using System.Linq;
 using Xunit;
 
-namespace Jarrus.GamesTests.Cards
+namespace Jarrus.GamesTests.Cards.Tricks
 {
-    public class StandardCatMatStateTests : IDisposable
+    public class TrickBasedStateTests : IDisposable
     {
-        public SimpleCardMat Mat;
+        public SimpleTrickBasedState Mat;
 
-        public StandardCatMatStateTests()
+        public TrickBasedStateTests()
         {
-            Mat = new SimpleCardMat();
+            Mat = new SimpleTrickBasedState();
         }
 
         public void Dispose() { Mat = null; }
@@ -52,6 +52,34 @@ namespace Jarrus.GamesTests.Cards
             }
 
             Assert.Equal(0, Mat.GetCardIndex());
+        }
+
+        [Fact]
+        public void ItShouldPlayACard()
+        {
+            Mat.ShuffleUp();
+            Mat.DealOut(12);
+
+            foreach(var player in Mat.GetHands())
+            {
+                Mat.Play(player.Seat, player.Cards[0]);
+            }
+
+            Assert.Equal(4, (int)Mat.GetBoard().Count());
+        }
+
+        [Fact]
+        public void ItShouldTakeATrickWhenAllPlayersPlay()
+        {
+            Mat.ShuffleUp();
+            Mat.DealOut(12);
+
+            foreach (var player in Mat.GetHands())
+            {
+                Mat.Play(player.Seat, player.Cards[0]);
+            }
+
+            //Assert.Equal(1, Mat.Tricks)
         }
     }
 }

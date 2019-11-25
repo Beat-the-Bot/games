@@ -12,8 +12,7 @@ namespace Jarrus.TTT
         {
             State = new State();
         }
-
-        public override void Process(EventAction gameMove)
+        protected override void ProcessMove(EventAction gameMove)
         {
             var move = (Action)gameMove;
             var state = (State)State;

@@ -30,7 +30,7 @@ namespace Jarrus.TTTTests
         {
             Game.Process(new Action(Seat.ONE, 1));
 
-            Assert.Equal("EXEEEEEEE", Game.ToString());
+            Assert.Equal("OXXOXOXEE", Game.ToString());
         }
 
         [Fact]

@@ -1,4 +1,5 @@
 ﻿using Jarrus.Event;
+using Jarrus.Games.Event;
 
 namespace Jarrus.Games
 {
@@ -8,8 +9,9 @@ namespace Jarrus.Games
         {
         }
 
+        public abstract void Process(EventAction action);
         public abstract bool IsComplete();
-        public abstract void Process(EventAction gameMove);
+        protected abstract void ProcessMove(EventAction gameMove);
         public abstract override string ToString();
     }
 }
