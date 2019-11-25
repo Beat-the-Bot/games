@@ -1,7 +1,5 @@
 ﻿using Jarrus.Event;
-using Jarrus.Games.Enums;
 using Jarrus.Games.Event;
-using Jarrus.Games.Players;
 using System.Linq;
 
 namespace Jarrus.Games.Types
@@ -61,11 +59,6 @@ namespace Jarrus.Games.Types
             }
 
             return false;
-        }
-
-        public void OnPlayerActionTaken(EventAction move)
-        {
-            Process(move);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Jarrus.TTT
             state.Set(move.Position, move.GetSymbol());
         }
 
-        protected override bool IsValidMove(EventAction gameMove)
+        public override bool IsValidMove(EventAction gameMove)
         {
             var state = (State)State;
 

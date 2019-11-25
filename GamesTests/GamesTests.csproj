@@ -32,4 +32,8 @@
     <ProjectReference Include="..\TicTacToe\TicTacToe.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Cards\Tricks\" />
+  </ItemGroup>
+
 </Project>
