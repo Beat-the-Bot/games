@@ -12,6 +12,7 @@ namespace Jarrus.Games
         public abstract void Process(EventAction action);
         public abstract bool IsComplete();
         protected abstract void ProcessMove(EventAction gameMove);
+        protected abstract bool IsValidMove(EventAction gameMove);
         public abstract override string ToString();
     }
 }

@@ -12,6 +12,7 @@ namespace Jarrus.TTT
         {
             State = new State();
         }
+
         protected override void ProcessMove(EventAction gameMove)
         {
             var move = (Action)gameMove;
@@ -21,6 +22,14 @@ namespace Jarrus.TTT
             if (validation != Validation.VALID) { throw new InvalidMoveException(validation.ToString()); }
 
             state.Set(move.Position, move.GetSymbol());
+        }
+
+        protected override bool IsValidMove(EventAction gameMove)
+        {
+            var state = (State)State;
+
+            var slot = gameMove.Instructions[0];
+            return state.Data[slot] == Symbol.E;
         }
 
         public override bool IsComplete()
