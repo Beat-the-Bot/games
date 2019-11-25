@@ -12,10 +12,22 @@ namespace Jarrus.Games.Types
 
         private byte _playerTurnIndex;
 
-        protected override void Play() {
-
+        protected override void Play()
+        {
             var player = Players[_playerTurnIndex];
+            Invoke(new EventPayload(EventType.ROUND_START));
             Invoke(new EventPayload(EventType.PLAYER_TURN_START, player));
+        }
+
+        public override void Process(EventAction gameMove)
+        {
+            ProcessMove(gameMove);
+
+            var currentPlayer = Players[_playerTurnIndex];
+            Invoke(new EventPayload(EventType.PLAYER_ACTION_TAKEN, currentPlayer, gameMove));
+            Invoke(new EventPayload(EventType.PLAYER_TURN_COMPLETE, currentPlayer));
+            
+            AdvanceTurn();
         }
 
         protected void AdvanceTurn()
@@ -24,7 +36,11 @@ namespace Jarrus.Games.Types
             if (gameComplete) { return; }
 
             _playerTurnIndex++;
-            if (_playerTurnIndex == Players.Length) { _playerTurnIndex = 0; }
+            if (_playerTurnIndex == Players.Length) { 
+                _playerTurnIndex = 0;
+                Invoke(new EventPayload(EventType.ROUND_END));
+                Invoke(new EventPayload(EventType.ROUND_START));
+            }
 
             var player = Players[_playerTurnIndex];
             Invoke(new EventPayload(EventType.PLAYER_TURN_START, player));
@@ -38,19 +54,13 @@ namespace Jarrus.Games.Types
             {
                 var winningPlayerSeat = State.GetWinningPlayer();
                 var winningPlayer = Players.Where(o => o.Seat == winningPlayerSeat).FirstOrDefault();
-                
+
                 Invoke(new EventPayload(EventType.GAME_COMPLETE));
                 Invoke(new EventPayload(EventType.GAME_WINNER, winningPlayer));
                 return true;
             }
 
             return false;
-        }
-
-        public override void Process(EventAction gameMove)
-        {
-            ProcessMove(gameMove);
-            AdvanceTurn();
         }
 
         public void OnPlayerActionTaken(EventAction move)
