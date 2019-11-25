@@ -1,4 +1,5 @@
 ﻿using Jarrus.Event;
+using Jarrus.Games.Enums;
 using Jarrus.Games.Event;
 using System.Linq;
 
@@ -19,6 +20,8 @@ namespace Jarrus.Games.Types
 
         public override void Process(EventAction gameMove)
         {
+            if (Status != GameStatus.IN_PROGRESS) { return; }
+
             ProcessMove(gameMove);
 
             var currentPlayer = Players[_playerTurnIndex];
@@ -52,6 +55,14 @@ namespace Jarrus.Games.Types
             {
                 var winningPlayerSeat = State.GetWinningPlayer();
                 var winningPlayer = Players.Where(o => o.Seat == winningPlayerSeat).FirstOrDefault();
+
+                if (winningPlayer == null)
+                {
+                    Status = GameStatus.TIE;
+                } else
+                {
+                    Status = (GameStatus)winningPlayerSeat;
+                }
 
                 Invoke(new EventPayload(EventType.GAME_COMPLETE));
                 Invoke(new EventPayload(EventType.GAME_WINNER, winningPlayer));

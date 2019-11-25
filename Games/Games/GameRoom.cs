@@ -12,6 +12,7 @@ namespace Jarrus.Games
         public Player[] Players;
         public List<Player> Spectators;
         public GameState State;
+        public GameStatus Status;
 
         public event EventTypeDelegate EventStream;
         public delegate void EventTypeDelegate(EventPayload args);
@@ -20,6 +21,7 @@ namespace Jarrus.Games
         {
             Players = new Player[numberOfPlayers];
             Spectators = new List<Player>();
+            Status = GameStatus.WAITING_ON_PLAYERS;
         }
 
         internal Seat OnPlayerJoin(Player player)
@@ -97,6 +99,7 @@ namespace Jarrus.Games
         public void Start()
         {
             Invoke(new EventPayload(EventType.GAME_STARTED));
+            Status = GameStatus.IN_PROGRESS;
             Play();
         }
 

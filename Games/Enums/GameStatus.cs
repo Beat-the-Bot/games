@@ -1,6 +1,6 @@
 ﻿namespace Jarrus.Games.Enums
 {
-    public enum GameResult
+    public enum GameStatus
     {
         IN_PROGRESS = 0,
         PLAYER_ONE_WINS = 1,

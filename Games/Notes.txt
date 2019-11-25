@@ -5,3 +5,7 @@
 
 GAME MECHANICS
 	-> All
+
+
+
+	GameResult TDD when all things occur
