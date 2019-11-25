@@ -1,7 +1,7 @@
 ﻿using Jarrus.Event;
-using Jarrus.Games;
 using Jarrus.Games.Enums;
 using Jarrus.Games.Exceptions;
+using Jarrus.Games.Types;
 using Jarrus.TTT.Enums;
 
 namespace Jarrus.TTT

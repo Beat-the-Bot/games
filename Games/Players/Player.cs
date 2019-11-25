@@ -1,5 +1,6 @@
 ﻿using Jarrus.Event;
 using Jarrus.Games.Enums;
+using Jarrus.Games.Event;
 using Jarrus.Games.Exceptions;
 
 namespace Jarrus.Games.Players
@@ -13,13 +14,13 @@ namespace Jarrus.Games.Players
         protected abstract void StartTurn();
         protected abstract EventAction DetermineMove(GameState gameState);
 
-        public void TakeTurn(GameMechanics game, Seat player)
+        public void TakeTurn(Seat seat)
         {
-            if (player != Seat) { return; }
+            if (seat != Seat) { return; }
             
             StartTurn();
-            var move = DetermineMove(game.State.GetStateFor(player));
-            //MakeMove(move);
+            var move = DetermineMove(_game.State.GetStateFor(seat));
+            _game.Process(move);
         }
 
         public void Sit() {
@@ -31,6 +32,7 @@ namespace Jarrus.Games.Players
         {
             _game = game;
             Seat = _game.OnPlayerJoin(this);
+            Subscribe();
         }
 
         public void Stand()
@@ -39,7 +41,7 @@ namespace Jarrus.Games.Players
             if (!IsSittingDown()) { return; }
 
             NotReady();
-            Seat = _game.OnPlayerStandUp(this);
+            Seat = _game.OnPlayerStandUp(this);            
         }
 
         public void Leave()
@@ -48,6 +50,7 @@ namespace Jarrus.Games.Players
             Seat = _game.OnPlayerLeave(this);
             IsReady = false;
             _game = null;
+            Unsubscribe();
         }
 
         public void Ready() {
@@ -65,6 +68,13 @@ namespace Jarrus.Games.Players
             IsReady = false; _game.OnPlayerNotReady(this);
         }
 
+        protected void HandleEvent(EventPayload payload)
+        {
+            if (payload.Type == EventType.PLAYER_TURN_START) { TakeTurn(payload.Player.Seat); return; }
+        }
+
+        protected void Subscribe() { _game.EventStream += HandleEvent; }
+        protected void Unsubscribe() { _game.EventStream -= HandleEvent; }
         public bool IsSittingDown() { return Seat.NONE != Seat && Seat.SPECTATOR != Seat; }
     }
 }

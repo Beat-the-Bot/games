@@ -22,7 +22,7 @@
         SCORE_UPDATE = 17,
         ROUND_START = 18,
         ROUND_END = 19,
-        GAME_WINNER = 34,
-        GAME_COMPLETE = 35,
+        GAME_WINNER = 998,
+        GAME_COMPLETE = 999,
     }
 }
