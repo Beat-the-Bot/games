@@ -1,0 +1,7 @@
+﻿GAME ROOM
+	-> Enum Tests
+	-> Scoreboard - each seat needs a win, loss tie - determined by game (Game State currently gets winning player)
+	-> Not Ready while game in progress means pause
+
+GAME MECHANICS
+	-> All
