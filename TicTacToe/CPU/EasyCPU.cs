@@ -5,12 +5,8 @@ using Jarrus.TTT.Enums;
 
 namespace Jarrus.TTT.CPU
 {
-    public class EasyAgent : Player
+    public class EasyCPU : Agent
     {
-        protected override void StartTurn()
-        {
-        }
-
         protected override EventAction DetermineMove(GameState gameState)
         {
             var state = (State)gameState;

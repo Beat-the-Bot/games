@@ -13,7 +13,7 @@ namespace Jarrus.GamesTests
     public class GameRoomTests : IDisposable
     {
         public TicTacToeGame Game;
-        public List<EasyAgent> Players = new List<EasyAgent>();
+        public List<EasyCPU> Players = new List<EasyCPU>();
         public List<EventPayload> Events = new List<EventPayload>();
 
         public GameRoomTests()
@@ -21,9 +21,9 @@ namespace Jarrus.GamesTests
             Game = new TicTacToeGame();
             Game.EventStream += OnEvent;
 
-            Players.Add(new EasyAgent());
-            Players.Add(new EasyAgent());
-            Players.Add(new EasyAgent());
+            Players.Add(new EasyCPU());
+            Players.Add(new EasyCPU());
+            Players.Add(new EasyCPU());
         }
 
         [Fact]

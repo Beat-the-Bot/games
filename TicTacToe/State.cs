@@ -80,6 +80,13 @@ namespace Jarrus.TTT
             Data[position] = symbol;
         }
 
+        public State Duplicate()
+        {
+            var state = new State();
+            state.Set(ToString());
+            return state;
+        }
+
         public int GetEmptySpaces() { return Data.Where(o => o == Symbol.E).Count(); }
 
         public override GameState GetStateFor(Seat position) { return this; }

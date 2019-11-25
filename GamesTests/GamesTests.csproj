@@ -21,11 +21,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Games\Games.csproj" />
+    <ProjectReference Include="..\TicTacToeTests\TicTacToeTests.csproj" />
     <ProjectReference Include="..\TicTacToe\TicTacToe.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Players\" />
   </ItemGroup>
 
 </Project>

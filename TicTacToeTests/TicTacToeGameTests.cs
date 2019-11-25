@@ -11,10 +11,10 @@ namespace Jarrus.TTTTests
     public class TicTacToeGameTests : IDisposable
     {
         public TicTacToeGame Game;
+
         public TicTacToeGameTests()
         {
-            Game = new TicTacToeGame();
-            SetupGame();
+            Game = TTTHelper.GetGame(new EasyCPU(), new EasyCPU());
         }
 
         public void Dispose() { Game = null; }
@@ -39,30 +39,6 @@ namespace Jarrus.TTTTests
             Game.Process(new Action(Seat.ONE, 1));
 
             Assert.Throws<InvalidMoveException>(() => Game.Process(new Action(Seat.ONE, 1)));
-        }
-
-        [Fact]
-        public void ItShouldStartTheGame()
-        {
-            Game.Start();
-
-            var board = Game.ToString();
-            Assert.Equal("XOXOXOXEE", board);
-        }
-
-        private void SetupGame()
-        {
-            var player1 = new EasyAgent();
-            var player2 = new EasyAgent();
-
-            player1.Join(Game);
-            player2.Join(Game);
-
-            player1.Sit();
-            player1.Ready();
-
-            player2.Sit();
-            player2.Ready();
         }
     }
 }

@@ -2,6 +2,7 @@
 using Jarrus.Games.Enums;
 using Jarrus.Games.Event;
 using Jarrus.Games.Exceptions;
+using System;
 
 namespace Jarrus.Games.Players
 {
@@ -9,16 +10,23 @@ namespace Jarrus.Games.Players
     {
         public Seat Seat;
         public bool IsReady;
+        protected int Seed;
+        protected Random Random;
         private GameMechanics _game;
 
-        protected abstract void StartTurn();
         protected abstract EventAction DetermineMove(GameState gameState);
+
+        public Player()
+        {
+            Random = new Random();
+            Seed = Random.Next(0, int.MaxValue);
+            Random = new Random(Seed);
+        }
 
         public void TakeTurn(Seat seat)
         {
             if (seat != Seat) { return; }
-            
-            StartTurn();
+
             var move = DetermineMove(_game.State.GetStateFor(seat));
             _game.Process(move);
         }
@@ -48,8 +56,7 @@ namespace Jarrus.Games.Players
         {
             if (Seat == Seat.NONE) { return; }
             Seat = _game.OnPlayerLeave(this);
-            IsReady = false;
-            _game = null;
+            IsReady = false;            
             Unsubscribe();
         }
 
@@ -73,8 +80,11 @@ namespace Jarrus.Games.Players
             if (payload.Type == EventType.PLAYER_TURN_START) { TakeTurn(payload.Player.Seat); return; }
         }
 
+        public int GetSeed() { return Seed; }
+        public void SetSeed(int seed) { Seed = seed; Random = new Random(Seed); }
+        protected int GetRandomNumber(int low, int high) { return Random.Next(low, high + 1); }
         protected void Subscribe() { _game.EventStream += HandleEvent; }
-        protected void Unsubscribe() { _game.EventStream -= HandleEvent; }
+        protected void Unsubscribe() { _game.EventStream -= HandleEvent; _game = null; }
         public bool IsSittingDown() { return Seat.NONE != Seat && Seat.SPECTATOR != Seat; }
     }
 }
